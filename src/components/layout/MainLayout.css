@@ -1,0 +1,58 @@
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.app-body {
+  display: flex;
+  margin-top: var(--topbar-height);
+  min-height: calc(100vh - var(--topbar-height));
+}
+
+/* Sidebar placeholder space */
+.sidebar-slot {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--topbar-height);
+  height: calc(100vh - var(--topbar-height));
+  overflow-y: auto;
+}
+
+/* Center feed */
+.main-content {
+  flex: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* Right panel placeholder space */
+.right-panel-slot {
+  width: var(--right-panel-width);
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--topbar-height);
+  height: calc(100vh - var(--topbar-height));
+  overflow-y: auto;
+}
+
+/* Mobile — hide sidebar and right panel */
+@media (max-width: 1024px) {
+  .right-panel-slot {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-slot {
+    display: none;
+  }
+  .main-content {
+    max-width: 100%;
+    padding: 16px 8px;
+    padding-bottom: 80px; /* space for bottom nav */
+  }
+}
