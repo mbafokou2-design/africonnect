@@ -1,27 +1,47 @@
 :root {
-  --color-silver: #ADB5BD;
+  /* ── Brand Colors ── */
+  --color-primary: #7C3D2B;      /* Terracotta */
+  --color-secondary: #2D6A4F;    /* Savanna Green */
+  --color-accent: #C9822A;       /* Kente Gold */
+
+  /* ── Surfaces ── */
   --color-white: #FFFFFF;
-  --color-light-gray: #C5C8D0;
-  --color-primary: #4B56D2;
-  --color-navy: #1A1F5E;
-  --color-bg: #F0F2F5;
-  --color-border: #E0E2E8;
-  --color-text: #1C1C1C;
-  --color-text-muted: #6B7280;
-  --color-success: #22C55E;
-  --color-warning: #F59E0B;
+  --color-bg: #FAF5F0;           /* Warm Cream */
+  --color-border: #E8E0D8;
+
+  /* ── Text ── */
+  --color-text: #1C1C1E;         /* Charcoal */
+  --color-text-muted: #7A6E65;
+
+  /* ── Dark Mode Surfaces (ready for dark mode later) ── */
+  --color-navy: #261A16;         /* Dark Clay — replaces old navy */
+  --color-dark-bg: #1A1210;      /* Obsidian */
+  --color-dark-card: #32211B;    /* Dark Ember */
+
+  /* ── UI States ── */
+  --color-silver: #C5BDB8;
+  --color-light-gray: #EDE5DC;
+  --color-success: #2D6A4F;      /* Savanna Green */
+  --color-warning: #C9822A;      /* Kente Gold */
   --color-danger: #EF4444;
+
+  /* ── Typography ── */
   --font-main: 'Inter', sans-serif;
+
+  /* ── Radii ── */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 1px 3px rgba(124,61,43,0.08);
+  --shadow-md: 0 4px 12px rgba(124,61,43,0.12);
+
+  /* ── Layout ── */
   --sidebar-width: 260px;
   --topbar-height: 64px;
   --right-panel-width: 320px;
 }
-
 * {
   margin: 0;
   padding: 0;
