@@ -1,0 +1,326 @@
+.right-panel {
+  width: var(--right-panel-width);
+  height: 100%;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* ── Card ── */
+.rp-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.rp-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rp-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rp-card__icon {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.rp-card__icon--blue   { background: rgba(75,86,210,0.12); color: var(--color-primary); }
+.rp-card__icon--green  { background: rgba(34,197,94,0.12);  color: #16a34a;             }
+.rp-card__icon--purple { background: rgba(124,58,237,0.12); color: #7c3aed;             }
+
+.rp-card__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.rp-card__view-all {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.rp-card__view-all:hover { opacity: 0.75; }
+
+.rp-card__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.rp-card__footer-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  border-top: 1px solid var(--color-border);
+  transition: background 0.2s;
+}
+
+.rp-card__footer-link:hover {
+  background: var(--color-bg);
+}
+
+/* ── Job Item ── */
+.rp-job-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  text-decoration: none;
+  transition: background 0.18s;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rp-job-item:last-child {
+  border-bottom: none;
+}
+
+.rp-job-item:hover {
+  background: var(--color-bg);
+}
+
+.rp-job-item__logo {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
+.rp-job-item__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rp-job-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.rp-job-item__title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rp-job-item__company {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rp-job-item__time {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.rp-job-item__badge {
+  background: var(--color-primary);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── Project Item ── */
+.rp-project-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.18s;
+}
+
+.rp-project-item:last-child {
+  border-bottom: none;
+}
+
+.rp-project-item:hover {
+  background: var(--color-bg);
+}
+
+.rp-project-item__icon {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.rp-project-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rp-project-item__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.rp-project-item__desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.rp-project-item__progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.rp-project-item__progress-bar {
+  height: 5px;
+  background: var(--color-border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.rp-project-item__progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.rp-project-item__amounts {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rp-project-item__amounts span {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rp-project-item__goal {
+  color: var(--color-text-muted) !important;
+  font-weight: 500 !important;
+}
+
+/* ── Group Item ── */
+.rp-group-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.18s;
+}
+
+.rp-group-item:last-child {
+  border-bottom: none;
+}
+
+.rp-group-item:hover {
+  background: var(--color-bg);
+}
+
+.rp-group-item__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid var(--color-border);
+}
+
+.rp-group-item__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rp-group-item__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.rp-group-item__name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rp-group-item__members {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.rp-group-item__join {
+  padding: 6px 14px;
+  border: 1.5px solid var(--color-primary);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  font-family: inherit;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.rp-group-item__join:hover {
+  background: var(--color-primary);
+  color: white;
+}

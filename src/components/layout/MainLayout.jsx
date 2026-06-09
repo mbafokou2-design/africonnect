@@ -1,15 +1,28 @@
-﻿import './MainLayout.css'
+﻿import Sidebar from '../sidebar/Sidebar'
+import RightPanel from '../rightpanel/RightPanel'
+import './MainLayout.css'
 
-function MainLayout({ children }) {
+export default function MainLayout({ children, activePath = '/' }) {
   return (
-    <main className="app-shell">
+    <div className="app-shell">
       <div className="app-body">
-        <div className="sidebar-slot" />
-        <div className="main-content">{children}</div>
-        <div className="right-panel-slot" />
+
+        {/* Left Sidebar */}
+        <div className="app-sidebar">
+          <Sidebar activePath={activePath} />
+        </div>
+
+        {/* Center Feed */}
+        <main className="main-content">
+          {children}
+        </main>
+
+        {/* Right Panel */}
+        <div className="app-right-panel">
+          <RightPanel />
+        </div>
+
       </div>
-    </main>
+    </div>
   )
 }
-
-export default MainLayout
