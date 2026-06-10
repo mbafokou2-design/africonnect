@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { BrowserRouter, useLocation } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
+import { ToastProvider } from './components/ui/Toast'
 import MainLayout from './components/layout/MainLayout'
 import Topbar from './components/topbar/Topbar'
 import BottomNav from './components/bottomnav/BottomNav'
 import AppRouter from './router/AppRouter'
+
 
 function AppInner() {
   const location = useLocation()
@@ -31,7 +33,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <LanguageProvider>
-        <AppInner />
+        <ToastProvider>
+          <AppInner />
+        </ToastProvider>
       </LanguageProvider>
     </BrowserRouter>
   )

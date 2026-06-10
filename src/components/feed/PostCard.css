@@ -175,10 +175,15 @@
 
 /* Image */
 .postcard__image-wrap {
+  display: block;
+  cursor: pointer;
   width: 100%;
   max-height: 420px;
   overflow: hidden;
 }
+
+.postcard__name-link { text-decoration: none; }
+.postcard__name-link:hover .postcard__name { color: var(--color-primary); }
 
 .postcard__image {
   width: 100%;
@@ -596,3 +601,6 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+.postcard__name-link { text-decoration: none; }
+.postcard__name-link:hover .postcard__name { color: var(--color-primary); }
+.postcard__image-wrap { display: block; cursor: pointer; }

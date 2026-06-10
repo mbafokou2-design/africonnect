@@ -7,6 +7,7 @@ import Profile       from '../pages/Profile/Profile'
 import Settings      from '../pages/Settings/Settings'
 import Jobs          from '../pages/Jobs/Jobs'
 import Projects      from '../pages/Projects/Projects'
+import Search        from '../pages/Search/Search'
 import Groups        from '../pages/Groups/Groups'
 import NotFound      from '../pages/NotFound/NotFound'
 
@@ -21,6 +22,7 @@ export default function AppRouter({ composerOpen, onComposerClose }) {
       <Route path="/settings"      element={<Settings />}      />
       <Route path="/jobs"          element={<Jobs />}          />
       <Route path="/projects"      element={<Projects />}      />
+      <Route path="/search"        element={<Search />}        />
       <Route path="/groups"        element={<Groups />}        />
       <Route path="*"              element={<NotFound />}      />
     </Routes>

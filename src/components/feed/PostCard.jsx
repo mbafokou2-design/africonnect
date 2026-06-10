@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faThumbsUp, faComment, faShare, faPaperPlane,
@@ -11,10 +12,10 @@ import { txt } from '../../utils/translate'
 import './PostCard.css'
 
 const reactionEmojis = [
-  { id: 'like', emoji: '👍', label: 'Like',    labelFr: "J'aime"  },
-  { id: 'love', emoji: '❤️', label: 'Love',    labelFr: "J'adore" },
-  { id: 'clap', emoji: '👏', label: 'Clap',    labelFr: 'Bravo'   },
-  { id: 'fire', emoji: '🔥', label: 'Fire',    labelFr: 'Feu'     },
+  { id: 'like', emoji: '👍', label: 'Like', labelFr: "J'aime" },
+  { id: 'love', emoji: '❤️', label: 'Love', labelFr: "J'adore" },
+  { id: 'clap', emoji: '👏', label: 'Clap', labelFr: 'Bravo' },
+  { id: 'fire', emoji: '🔥', label: 'Fire', labelFr: 'Feu' },
   { id: 'idea', emoji: '💡', label: 'Insightful', labelFr: 'Instructif' },
 ]
 
@@ -53,21 +54,21 @@ const fakeComments = [
 ]
 
 export default function PostCard({ post }) {
-  const { lang }   = useLang()
-  const [reaction, setReaction]           = useState(null)
+  const { lang } = useLang()
+  const [reaction, setReaction] = useState(null)
   const [showReactions, setShowReactions] = useState(false)
-  const [showMenu, setShowMenu]           = useState(false)
-  const [saved, setSaved]                 = useState(false)
-  const [expanded, setExpanded]           = useState(false)
-  const [showComments, setShowComments]   = useState(false)
-  const [commentText, setCommentText]     = useState('')
-  const [comments, setComments]           = useState(fakeComments)
+  const [showMenu, setShowMenu] = useState(false)
+  const [saved, setSaved] = useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const [showComments, setShowComments] = useState(false)
+  const [commentText, setCommentText] = useState('')
+  const [comments, setComments] = useState(fakeComments)
   const [submittingComment, setSubmittingComment] = useState(false)
   const commentInputRef = useRef()
   const menuRef = useRef()
 
   const content = lang === 'fr' ? post.contentFr : post.contentEn
-  const isLong  = content.length > 200
+  const isLong = content.length > 200
 
   // Close menu on outside click
   useEffect(() => {
@@ -153,10 +154,18 @@ export default function PostCard({ post }) {
 
         {/* ── Header ── */}
         <div className="postcard__header">
-          <img src={post.user.avatar} alt={post.user.name} className="postcard__avatar" />
+          <Link to={`/profile/${post.user.id}`} className="postcard__avatar-link">
+            <a href={`/profile/${post.user.id || 1}`}>
+              <img src={post.user.avatar} alt={post.user.name} className="postcard__avatar" />
+            </a>
+          </Link>
           <div className="postcard__user-info">
             <div className="postcard__name-row">
-              <span className="postcard__name">{post.user.name}</span>
+              <Link to={`/profile/${post.user.id}`} className="postcard__name-link">
+                <a href={`/profile/${post.user.id || 1}`} className="postcard__name-link">
+                  <span className="postcard__name">{post.user.name}</span>
+                </a>
+              </Link>
               {post.user.verified && (
                 <FontAwesomeIcon icon={faCheckCircle} className="postcard__verified" />
               )}
@@ -224,10 +233,9 @@ export default function PostCard({ post }) {
 
         {/* ── Image ── */}
         {post.image && (
-          <div className="postcard__image-wrap">
+          <a href={`/post/${post.id}`} className="postcard__image-wrap">
             <img src={post.image} alt="post" className="postcard__image" />
-            {/* REPLACE src with API image URL when backend ready */}
-          </div>
+          </a>
         )}
 
         {/* ── Reaction summary ── */}
