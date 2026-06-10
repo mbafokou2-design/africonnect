@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useLang } from '../../context/LanguageContext'
 import { txt } from '../../utils/translate'
+import logo from '../../assets/logo1.jpg'
 import './Topbar.css'
 
 const navItems = [
@@ -36,14 +37,8 @@ export default function Topbar({ activePath = '/' }) {
       {/* LEFT */}
       <div className="topbar__left">
         <a href="/" className="topbar__logo">
-          <div className="topbar__logo-placeholder"><span>AC</span></div>
+          <img src={logo} alt="AfriConnect" className="topbar__logo-img" />
           <div className="topbar__logo-text">
-            <span className="topbar__logo-name">AfriConnect</span>
-            <span className="topbar__logo-tagline"
-              data-en="Connect. Collaborate. Succeed."
-              data-fr="Connecter. Collaborer. Réussir.">
-              {txt('Connect. Collaborate. Succeed.', 'Connecter. Collaborer. Réussir.', lang)}
-            </span>
           </div>
         </a>
       </div>
