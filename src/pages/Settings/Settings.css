@@ -1,0 +1,149 @@
+.settings-page { display: flex; flex-direction: column; gap: 12px; }
+
+.settings-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settings-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.settings-card__icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.settings-card__icon--blue   { background: rgba(75,86,210,0.1);  color: #4b56d2; }
+.settings-card__icon--orange { background: rgba(201,130,42,0.1); color: var(--color-accent); }
+.settings-card__icon--green  { background: rgba(45,106,79,0.1);  color: var(--color-secondary); }
+.settings-card__icon--red    { background: rgba(239,68,68,0.1);  color: var(--color-danger); }
+
+.settings-card__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.settings-card__desc {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* Language toggle */
+.settings-lang-toggle {
+  display: flex;
+  gap: 10px;
+}
+
+.settings-lang-btn {
+  flex: 1;
+  padding: 12px;
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  background: var(--color-bg);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.settings-lang-btn.active {
+  border-color: var(--color-primary);
+  background: rgba(124,61,43,0.06);
+  color: var(--color-primary);
+}
+
+.settings-lang-btn:hover:not(.active) {
+  border-color: var(--color-text-muted);
+}
+
+/* Toggle rows */
+.settings-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--color-text);
+  padding: 4px 0;
+}
+
+/* Switch */
+.settings-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.settings-switch input { opacity: 0; width: 0; height: 0; }
+
+.settings-switch__slider {
+  position: absolute;
+  inset: 0;
+  background: var(--color-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.settings-switch__slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  left: 3px;
+  top: 3px;
+  transition: transform 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.settings-switch input:checked + .settings-switch__slider {
+  background: var(--color-primary);
+}
+
+.settings-switch input:checked + .settings-switch__slider::before {
+  transform: translateX(20px);
+}
+
+/* Danger button */
+.settings-danger-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(239,68,68,0.08);
+  color: var(--color-danger);
+  border: 1.5px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+  width: fit-content;
+}
+
+.settings-danger-btn:hover {
+  background: rgba(239,68,68,0.15);
+}

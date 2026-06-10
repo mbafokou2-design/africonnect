@@ -1,0 +1,343 @@
+.network-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.network-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.network-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ── Requests ── */
+.network-requests-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.request-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.request-card:hover { box-shadow: var(--shadow-md); }
+
+.request-card__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.request-card__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-light-gray);
+  flex-shrink: 0;
+}
+
+.request-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.request-card__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.request-card__title {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.request-card__mutual {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.request-card__actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.request-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.request-btn:hover { transform: translateY(-1px); }
+
+.request-btn--accept {
+  background: var(--color-primary);
+  color: white;
+}
+
+.request-btn--refuse {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+
+.request-btn--refuse:hover {
+  background: rgba(239,68,68,0.08);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+/* ── Connections ── */
+.connections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.connection-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.connection-card:hover { box-shadow: var(--shadow-md); }
+
+.connection-card__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.connection-card__avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-light-gray);
+  flex-shrink: 0;
+}
+
+.connection-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.connection-card__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.connection-card__title {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.connection-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.conn-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: all 0.18s;
+}
+
+.conn-btn--profile {
+  background: var(--color-bg);
+  color: var(--color-navy);
+  border-color: var(--color-border);
+}
+
+.conn-btn--profile:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.conn-btn--message {
+  background: var(--color-primary);
+  color: white;
+}
+
+.conn-btn--message:hover { opacity: 0.85; }
+
+.conn-btn--remove {
+  padding: 7px 10px;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  border-color: var(--color-border);
+}
+
+.conn-btn--remove:hover {
+  background: rgba(239,68,68,0.08);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+/* ── Suggestions grid ── */
+.network-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.network-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.network-card:hover { box-shadow: var(--shadow-md); }
+
+.network-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-light-gray);
+}
+
+.network-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.network-card__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-navy);
+  text-decoration: none;
+}
+
+.network-card__name:hover { color: var(--color-primary); }
+
+.network-card__title {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.network-card__mutual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.network-card__connect {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--color-primary);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.network-card__connect:hover:not(:disabled) {
+  background: var(--color-primary);
+  color: white;
+}
+
+.network-card__connect.sent {
+  background: rgba(45,106,79,0.08);
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  cursor: default;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .request-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .connection-card__actions {
+    flex-wrap: wrap;
+  }
+
+  .conn-btn span { display: none; }
+  .conn-btn { padding: 7px 10px; }
+}

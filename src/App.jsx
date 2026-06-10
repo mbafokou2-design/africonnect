@@ -1,29 +1,38 @@
 import { useState } from 'react'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, useLocation } from 'react-router-dom'
 import { LanguageProvider } from './context/LanguageContext'
 import MainLayout from './components/layout/MainLayout'
 import Topbar from './components/topbar/Topbar'
-import HeroBanner from './components/hero/HeroBanner'
-import PostComposer from './components/composer/PostComposer'
-import Feed from './components/feed/Feed'
 import BottomNav from './components/bottomnav/BottomNav'
+import AppRouter from './router/AppRouter'
 
-function App() {
+function AppInner() {
+  const location = useLocation()
   const [composerOpen, setComposerOpen] = useState(false)
 
   return (
+    <>
+      <Topbar activePath={location.pathname} />
+      <MainLayout activePath={location.pathname}>
+        <AppRouter
+          composerOpen={composerOpen}
+          onComposerClose={() => setComposerOpen(false)}
+        />
+      </MainLayout>
+      <BottomNav
+        activePath={location.pathname}
+        onPlusClick={() => setComposerOpen(true)}
+      />
+    </>
+  )
+}
+
+export default function App() {
+  return (
     <BrowserRouter>
       <LanguageProvider>
-        <Topbar activePath="/" />
-        <MainLayout activePath="/">
-          <HeroBanner />
-          <PostComposer forceOpen={composerOpen} onClose={() => setComposerOpen(false)} />
-          <Feed />
-        </MainLayout>
-        <BottomNav activePath="/" onPlusClick={() => setComposerOpen(true)} />
+        <AppInner />
       </LanguageProvider>
     </BrowserRouter>
   )
 }
-
-export default App
