@@ -1,0 +1,336 @@
+.pedit-page {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding-bottom: 100px;
+}
+
+/* ── Header ── */
+.pedit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: var(--topbar-height);
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.pedit-header__back {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: none;
+  color: var(--color-navy);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.pedit-header__back:hover { background: var(--color-border); }
+
+.pedit-header__title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-navy);
+}
+
+.pedit-header__save {
+  padding: 8px 20px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s;
+  min-width: 80px;
+  justify-content: center;
+}
+
+.pedit-header__save:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Cover + Avatar ── */
+.pedit-cover {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.pedit-cover__bg {
+  height: 140px;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-navy) 100%);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 12px;
+}
+
+.pedit-cover__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.45);
+  color: white;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+
+.pedit-cover__btn:hover { background: rgba(0,0,0,0.65); }
+
+.pedit-cover__avatar-wrap {
+  position: absolute;
+  bottom: -36px;
+  left: 20px;
+}
+
+.pedit-cover__avatar-wrap img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid white;
+  display: block;
+}
+
+.pedit-cover__avatar-btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  border: 2px solid white;
+  font-size: 11px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Section tabs ── */
+.pedit-tabs {
+  display: flex;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--color-border);
+  overflow-x: auto;
+  padding: 0 12px;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.pedit-tab {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.pedit-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+/* ── Section ── */
+.pedit-section {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px 16px;
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.pedit-section__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-navy);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Field ── */
+.pedit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pedit-field label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.pedit-field input,
+.pedit-field textarea {
+  padding: 11px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  color: var(--color-text);
+  font-family: inherit;
+  outline: none;
+  background: var(--color-bg);
+  transition: border-color 0.2s, background 0.2s;
+  resize: vertical;
+}
+
+.pedit-field input:focus,
+.pedit-field textarea:focus {
+  border-color: var(--color-primary);
+  background: white;
+}
+
+.pedit-field__hint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.pedit-field--inline { gap: 4px; }
+
+/* ── Experience / Education card ── */
+.pedit-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--color-bg);
+}
+
+.pedit-card__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pedit-card__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: rgba(124,61,43,0.1);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.pedit-card__label {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-navy);
+}
+
+.pedit-card__remove {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(239,68,68,0.08);
+  color: var(--color-danger);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.pedit-card__remove:hover { background: rgba(239,68,68,0.18); }
+
+/* ── Add button ── */
+.pedit-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.pedit-add-btn:hover {
+  border-color: var(--color-primary);
+  background: rgba(124,61,43,0.04);
+}
+
+/* ── Bottom save ── */
+.pedit-bottom-save {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.06);
+  z-index: 100;
+}
+
+.pedit-save-btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.pedit-save-btn:disabled { opacity: 0.55; cursor: not-allowed; }

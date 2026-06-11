@@ -10,6 +10,8 @@ import { useLang } from '../../context/LanguageContext'
 import { txt } from '../../utils/translate'
 import { useToast } from '../../components/ui/Toast'
 import PostCard from '../../components/feed/PostCard'
+import EditPostModal from '../../components/feed/EditPostModal'
+
 import './Profile.css'
 
 // TODO: fetch from ${import.meta.env.VITE_API_BASE_URL}/profile/me
@@ -64,11 +66,12 @@ export default function Profile() {
   const { addToast } = useToast()
   const isMobile  = window.innerWidth <= 768
 
-  const [profile,    setProfile]    = useState(initialProfile)
-  const [editOpen,   setEditOpen]   = useState(false)
-  const [saving,     setSaving]     = useState(false)
-  const [editData,   setEditData]   = useState(profile)
-  const [activeTab,  setActiveTab]  = useState('posts') // posts | about
+  const [profile,      setProfile]      = useState(initialProfile)
+  const [editOpen,     setEditOpen]     = useState(false)
+  const [saving,       setSaving]       = useState(false)
+  const [editData,     setEditData]     = useState(profile)
+  const [activeTab,    setActiveTab]    = useState('posts') // posts | about
+  const [editingPost,  setEditingPost]  = useState(null)
   const avatarRef = useRef()
   const coverRef  = useRef()
 
@@ -283,7 +286,7 @@ export default function Profile() {
               {/* Own post actions */}
               <div className="profile-post-actions">
                 <button className="profile-post-btn profile-post-btn--edit"
-                  onClick={openEdit}>
+                  onClick={() => setEditingPost(post)}>
                   <FontAwesomeIcon icon={faPen} />
                   {txt('Edit post', 'Modifier', lang)}
                 </button>
@@ -377,6 +380,18 @@ export default function Profile() {
           </div>
           {EditForm}
         </div>
+      )}
+
+      {/* Edit Post Modal */}
+      {editingPost && (
+        <EditPostModal
+          post={editingPost}
+          onClose={() => setEditingPost(null)}
+          onSave={(updated) => {
+            // TODO: update posts list from API
+            setEditingPost(null)
+          }}
+        />
       )}
 
     </div>

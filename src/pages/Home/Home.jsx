@@ -2,11 +2,14 @@ import HeroBanner   from '../../components/hero/HeroBanner'
 import PostComposer from '../../components/composer/PostComposer'
 import Feed         from '../../components/feed/Feed'
 
-export default function Home({ composerOpen, onComposerClose }) {
+export default function Home() {
   return (
     <>
       <HeroBanner />
-      <PostComposer forceOpen={composerOpen} onClose={onComposerClose} />
+      {/* Desktop composer — hidden on mobile via CSS */}
+      <div className="home-composer-desktop">
+        <PostComposer />
+      </div>
       <Feed />
     </>
   )

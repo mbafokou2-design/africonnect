@@ -170,3 +170,22 @@ img {
 }
 
 .page-coming-soon span { font-size: 20px; }
+
+/* Desktop composer on Home — hide on mobile */
+.home-composer-desktop {
+  display: block;
+}
+
+/* Mobile global composer wrapper — only renders on mobile */
+.mobile-composer-global {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .home-composer-desktop {
+    display: none;
+  }
+  .mobile-composer-global {
+    display: block;
+  }
+}
