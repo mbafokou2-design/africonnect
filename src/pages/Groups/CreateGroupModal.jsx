@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { txt } from '../../utils/translate'
 import { categories } from '../../data/groupsData'
-import './createGroupModal.css'
+import './CreateGroupModal.css'
 
 export default function CreateGroupModal({ onClose, onCreate, lang }) {
   const isMobile = window.innerWidth <= 768
