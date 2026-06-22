@@ -108,7 +108,56 @@ export default function Events() {
     <div className="events-page">
 
       {/* ── Left sidebar ── */}
+      <aside className="events-sidebar">
 
+        {/* Header */}
+        <div className="events-sidebar__header">
+          <h1 className="events-sidebar__title"
+            data-en="Events" data-fr="Événements">
+            {txt('Events', 'Événements', lang)}
+          </h1>
+        </div>
+
+        {/* Search */}
+        <div className="events-sidebar__search">
+          <FontAwesomeIcon icon={faSearch} />
+          <input
+            type="text"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder={txt('Search events...', 'Rechercher des événements...', lang)}
+          />
+        </div>
+
+        {/* Nav */}
+        <nav className="events-sidebar__nav">
+          <button
+            className={`events-sidebar__nav-item ${tab === 'discover' ? 'active' : ''}`}
+            onClick={() => setTab('discover')}
+          >
+            <div className="events-sidebar__nav-icon">
+              <FontAwesomeIcon icon={faCalendarDays} />
+            </div>
+            {txt('Home', 'Accueil', lang)}
+          </button>
+          <button
+            className={`events-sidebar__nav-item ${tab === 'mine' ? 'active' : ''}`}
+            onClick={() => setTab('mine')}
+          >
+            <div className="events-sidebar__nav-icon">
+              <FontAwesomeIcon icon={faStar} />
+            </div>
+            {txt('Your events', 'Vos événements', lang)}
+          </button>
+        </nav>
+
+        {/* Create button */}
+        <button className="events-sidebar__create-btn" onClick={() => setShowCreate(true)}>
+          <FontAwesomeIcon icon={faPlus} />
+          {txt('Create an event', 'Créer un événement', lang)}
+        </button>
+
+      </aside>
 
       {/* ── Main content ── */}
       <div className="events-main">

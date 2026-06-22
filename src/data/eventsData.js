@@ -1,16 +1,16 @@
 // TODO: fetch from ${import.meta.env.VITE_API_BASE_URL}/events
 
 export const eventCategories = [
-  { id: 'all',         labelEn: 'All',              labelFr: 'Tout',              icon: '🌍' },
-  { id: 'networking',  labelEn: 'Networking',        labelFr: 'Réseautage',        icon: '🤝' },
-  { id: 'tech',        labelEn: 'Tech',              labelFr: 'Tech',              icon: '💻' },
-  { id: 'finance',     labelEn: 'Finance',           labelFr: 'Finance',           icon: '💰' },
-  { id: 'arts',        labelEn: 'Arts & Culture',    labelFr: 'Arts & Culture',    icon: '🎨' },
-  { id: 'health',      labelEn: 'Health',            labelFr: 'Santé',             icon: '🏥' },
-  { id: 'education',   labelEn: 'Education',         labelFr: 'Éducation',         icon: '🎓' },
-  { id: 'business',    labelEn: 'Business',          labelFr: 'Business',          icon: '💼' },
-  { id: 'social',      labelEn: 'Social',            labelFr: 'Social',            icon: '🎉' },
-  { id: 'sport',       labelEn: 'Sport',             labelFr: 'Sport',             icon: '⚽' },
+  { id: 'all',         labelEn: 'All',              labelFr: 'Tout'              },
+  { id: 'networking',  labelEn: 'Networking',        labelFr: 'Réseautage'        },
+  { id: 'tech',        labelEn: 'Tech',              labelFr: 'Tech'              },
+  { id: 'finance',     labelEn: 'Finance',           labelFr: 'Finance'           },
+  { id: 'arts',        labelEn: 'Arts & Culture',    labelFr: 'Arts & Culture'    },
+  { id: 'health',      labelEn: 'Health',            labelFr: 'Santé'             },
+  { id: 'education',   labelEn: 'Education',         labelFr: 'Éducation'        },
+  { id: 'business',    labelEn: 'Business',          labelFr: 'Business'          },
+  { id: 'social',      labelEn: 'Social',            labelFr: 'Social'            },
+  { id: 'sport',       labelEn: 'Sport',             labelFr: 'Sport'             },
 ]
 
 export const myEvents = [
