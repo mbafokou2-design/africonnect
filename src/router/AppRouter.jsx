@@ -15,6 +15,7 @@ import Post from '../pages/Post/Post'
 import NotFound from '../pages/NotFound/NotFound'
 import Events from '../pages/Events/Events'
 import EventDetail from '../pages/Events/EventDetail'
+import ProjectDetail from '../pages/Projects/ProjectDetail'
 
 export default function AppRouter({ composerOpen, onComposerClose }) {
   return (
@@ -35,6 +36,8 @@ export default function AppRouter({ composerOpen, onComposerClose }) {
       <Route path="*" element={<NotFound />} />
       <Route path="/events" element={<Events />} />
       <Route path="/events/:id" element={<EventDetail />} />
+      <Route path="/projects"     element={<Projects />}      />
+      <Route path="/projects/:id" element={<ProjectDetail />} />
     </Routes>
   )
 }
