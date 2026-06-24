@@ -16,6 +16,8 @@ import NotFound from '../pages/NotFound/NotFound'
 import Events from '../pages/Events/Events'
 import EventDetail from '../pages/Events/EventDetail'
 import ProjectDetail from '../pages/Projects/ProjectDetail'
+import Diaspora from '../pages/Diaspora/Diaspora'
+import Marketplace from '../pages/Marketplace/Marketplace'
 
 export default function AppRouter({ composerOpen, onComposerClose }) {
   return (
@@ -38,6 +40,8 @@ export default function AppRouter({ composerOpen, onComposerClose }) {
       <Route path="/events/:id" element={<EventDetail />} />
       <Route path="/projects"     element={<Projects />}      />
       <Route path="/projects/:id" element={<ProjectDetail />} />
+      <Route path="/diaspora" element={<Diaspora />} />
+      <Route path="/marketplace" element={<Marketplace />} />
     </Routes>
   )
 }
