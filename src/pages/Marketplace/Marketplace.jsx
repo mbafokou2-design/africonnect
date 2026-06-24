@@ -1,109 +1,99 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faStore, faSearch, faPlus, faFilter,
-  faXmark, faChevronDown, faLocationDot,
-  faStar, faBookmark, 
-  faArrowRight, faFire, faSeedling,
-  faLaptop, faIndustry, faBriefcase,
-  faTruck, faBolt, faHospital,
-  faBuilding, faChartLine, faBullhorn,
-  faTag, faFileContract, faBoxes,
-  faCheckCircle, faClock, faEnvelope,
-  faPhone
+  faXmark, faShieldHalved, faEye,
+  faMessage, faBookmark, faLocationDot,
+  faBoxOpen, faHandshake, faArrowRight,
+  faStar, faFire, faCheck, faChevronDown,
+  faSeedling, faLaptop, faHammer,
+  faIndustry, faUtensils, faHeartPulse,
+  faCoins, faBolt, faTruck, faScissors,
+  faEllipsis, faBuilding, faBullhorn
 } from '@fortawesome/free-solid-svg-icons'
-import { faBookmark as faBookmarkReg, faStar as faStarReg } from '@fortawesome/free-regular-svg-icons'
+import { faBookmark as faBookmarkReg } from '@fortawesome/free-regular-svg-icons'
 import { useLang } from '../../context/LanguageContext'
 import { txt } from '../../utils/translate'
 import { useToast } from '../../components/ui/Toast'
 import {
-  allListings, featuredCompanies,
-  marketplaceCategories, listingTypes
+  allListings, marketplaceCategories, listingTypes
 } from '../../data/marketplaceData'
-// import PostListingModal from './PostListingModal'
-// import ContactModal from './ContactModal'
+import ListingDetail from './ListingDetail'
+import PostListingModal from './PostListingModal'
+import InquiryModal from './InquiryModal'
 import './Marketplace.css'
 
 const catIcons = {
-  all: faStore, agriculture: faSeedling, tech: faLaptop,
-  manufacturing: faIndustry, services: faBriefcase,
-  logistics: faTruck, energy: faBolt, health: faHospital,
-  construction: faBuilding, finance: faChartLine, media: faBullhorn,
+  all:           faStore,
+  agri:          faSeedling,
+  tech:          faLaptop,
+  construction:  faHammer,
+  manufacturing: faIndustry,
+  food:          faUtensils,
+  health:        faHeartPulse,
+  finance:       faCoins,
+  energy:        faBolt,
+  logistics:     faTruck,
+  textile:       faScissors,
 }
 
-const typeConfig = {
-  product:   { icon: faTag,          colorEn: 'Product',   colorFr: 'Produit',        bg:'rgba(45,106,79,0.1)',   color:'#2D6A4F' },
-  service:   { icon: faBriefcase,    colorEn: 'Service',   colorFr: 'Service',        bg:'rgba(124,61,43,0.1)',   color:'#7C3D2B' },
-  tender:    { icon: faFileContract, colorEn: 'Tender',    colorFr: 'Appel d\'offres',bg:'rgba(67,56,202,0.1)',   color:'#4338ca' },
-  wholesale: { icon: faBoxes,        colorEn: 'Wholesale', colorFr: 'Gros',           bg:'rgba(201,130,42,0.1)', color:'#C9822A' },
-}
-
-function StarRating({ rating }) {
-  return (
-    <div className="star-rating">
-      {[1,2,3,4,5].map(i => (
-        <FontAwesomeIcon
-          key={i}
-          icon={i <= Math.round(rating) ? faStar : faStarReg}
-          className={i <= Math.round(rating) ? 'star-rating__filled' : 'star-rating__empty'}
-        />
-      ))}
-      <span className="star-rating__num">{rating}</span>
-    </div>
-  )
+const typeColors = {
+  sell:    { bg:'rgba(45,106,79,0.1)',   color:'#2D6A4F', labelEn:'Selling',     labelFr:'Vente'       },
+  buy:     { bg:'rgba(67,56,202,0.1)',   color:'#4338ca', labelEn:'Buying',      labelFr:'Achat'       },
+  service: { bg:'rgba(124,61,43,0.1)',   color:'#7C3D2B', labelEn:'Service',     labelFr:'Service'     },
+  partner: { bg:'rgba(201,130,42,0.1)',  color:'#C9822A', labelEn:'Partnership', labelFr:'Partenariat' },
 }
 
 export default function Marketplace() {
   const { lang }     = useLang()
   const { addToast } = useToast()
-  const navigate     = useNavigate()
 
   const [listings,      setListings]      = useState(allListings)
   const [search,        setSearch]        = useState('')
   const [category,      setCategory]      = useState('all')
   const [listingType,   setListingType]   = useState('all')
   const [showFilters,   setShowFilters]   = useState(false)
-  const [tab,           setTab]           = useState('listings') // listings | companies | saved
+  const [tab,           setTab]           = useState('all') // all | featured | saved
+  const [selectedListing, setSelectedListing] = useState(null)
   const [showPost,      setShowPost]      = useState(false)
-  const [contactItem,   setContactItem]   = useState(null)
-  const [sortBy,        setSortBy]        = useState('trending')
-
-  const sortOptions = [
-    { id:'trending', labelEn:'Trending',    labelFr:'Tendances'     },
-    { id:'newest',   labelEn:'Newest',      labelFr:'Plus récents'  },
-    { id:'rated',    labelEn:'Top rated',   labelFr:'Mieux notés'   },
-  ]
+  const [inquiryListing,setInquiryListing]= useState(null)
+  const [sortBy,        setSortBy]        = useState('newest')
+  const [verifiedOnly,  setVerifiedOnly]  = useState(false)
 
   const toggleSave = (id, e) => {
     e.stopPropagation()
-    setListings(prev => prev.map(l => l.id === id ? { ...l, isSaved: !l.isSaved } : l))
+    setListings(prev => prev.map(l =>
+      l.id === id ? { ...l, isSaved: !l.isSaved } : l
+    ))
     const item = listings.find(l => l.id === id)
     addToast(
       item.isSaved
-        ? txt('Removed from saved', 'Retiré des sauvegardes', lang)
+        ? txt('Removed from saved', 'Retiré', lang)
         : txt('Listing saved!', 'Annonce sauvegardée !', lang),
       item.isSaved ? 'info' : 'success'
     )
     // TODO: POST ${import.meta.env.VITE_API_BASE_URL}/marketplace/${id}/save
   }
 
-  const filtered = listings.filter(l => {
-    const matchSearch = !search ||
-      l.titleEn.toLowerCase().includes(search.toLowerCase()) ||
-      l.company.toLowerCase().includes(search.toLowerCase()) ||
-      l.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))
-    const matchCat  = category === 'all' || l.category === category
-    const matchType = listingType === 'all' || l.type === listingType
-    const matchTab  = tab === 'saved' ? l.isSaved : true
-    return matchSearch && matchCat && matchType && matchTab
-  }).sort((a, b) => {
-    if (sortBy === 'rated')  return (b.rating || 0) - (a.rating || 0)
-    if (sortBy === 'newest') return b.id - a.id
-    return (b.reviews || 0) - (a.reviews || 0)
-  })
+  const filtered = listings
+    .filter(l => {
+      const matchSearch   = !search || l.titleEn.toLowerCase().includes(search.toLowerCase()) || l.titleFr.toLowerCase().includes(search.toLowerCase()) || l.company.toLowerCase().includes(search.toLowerCase())
+      const matchCat      = category    === 'all' || l.category === category
+      const matchType     = listingType === 'all' || l.type     === listingType
+      const matchTab      = tab === 'saved'    ? l.isSaved
+                          : tab === 'featured' ? l.isFeatured
+                          : true
+      const matchVerified = !verifiedOnly || l.verified
+      return matchSearch && matchCat && matchType && matchTab && matchVerified
+    })
+    .sort((a, b) => {
+      if (sortBy === 'mostviewed') return b.views    - a.views
+      if (sortBy === 'mostactive') return b.inquiries - a.inquiries
+      return b.id - a.id // newest
+    })
 
-  const savedCount = listings.filter(l => l.isSaved).length
+  const featuredCount = listings.filter(l => l.isFeatured).length
+  const savedCount    = listings.filter(l => l.isSaved).length
 
   return (
     <div className="mkt-page">
@@ -115,14 +105,13 @@ export default function Marketplace() {
             <FontAwesomeIcon icon={faStore} />
           </div>
           <div>
-            <h1 className="mkt-header__title"
-              data-en="B2B Marketplace" data-fr="Marketplace B2B">
+            <h1 className="mkt-header__title">
               {txt('B2B Marketplace', 'Marketplace B2B', lang)}
             </h1>
             <p className="mkt-header__sub">
               {txt(
-                'Buy, sell and partner with African businesses',
-                'Achetez, vendez et partenariez avec des entreprises africaines',
+                'Trade, partner and grow with African businesses',
+                'Échangez, partenariez et grandissez avec des entreprises africaines',
                 lang
               )}
             </p>
@@ -134,24 +123,22 @@ export default function Marketplace() {
         </button>
       </div>
 
-      {/* ── Hero stats strip ── */}
-      <div className="mkt-stats-strip">
+      {/* ── Stats bar ── */}
+      <div className="mkt-stats-bar">
         {[
-          { num:'2,400+', labelEn:'Active listings',  labelFr:'Annonces actives'  },
-          { num:'850+',   labelEn:'Verified companies',labelFr:'Entreprises vérif.' },
-          { num:'38',     labelEn:'African countries', labelFr:'Pays africains'    },
-          { num:'4.8★',   labelEn:'Average rating',   labelFr:'Note moyenne'      },
+          { num: listings.length,                        labelEn:'Active listings',  labelFr:'Annonces actives'  },
+          { num: listings.filter(l=>l.verified).length,  labelEn:'Verified companies',labelFr:'Entreprises vérifiées'},
+          { num: listings.reduce((a,l)=>a+l.inquiries,0),labelEn:'Inquiries today',  labelFr:'Demandes aujourd\'hui'},
+          { num: '40+',                                   labelEn:'Countries',        labelFr:'Pays'              },
         ].map((s, i) => (
-          <div key={i} className="mkt-stats-strip__item">
-            <span className="mkt-stats-strip__num">{s.num}</span>
-            <span className="mkt-stats-strip__label">
-              {txt(s.labelEn, s.labelFr, lang)}
-            </span>
+          <div key={i} className="mkt-stat">
+            <span className="mkt-stat__num">{s.num}</span>
+            <span className="mkt-stat__label">{txt(s.labelEn, s.labelFr, lang)}</span>
           </div>
         ))}
       </div>
 
-      {/* ── Search + sort + filters ── */}
+      {/* ── Search + sort + filter ── */}
       <div className="mkt-search-bar">
         <div className="mkt-search-bar__field">
           <FontAwesomeIcon icon={faSearch} />
@@ -166,7 +153,7 @@ export default function Marketplace() {
             )}
           />
           {search && (
-            <button onClick={() => setSearch('')} className="mkt-search-bar__clear">
+            <button onClick={() => setSearch('')}>
               <FontAwesomeIcon icon={faXmark} />
             </button>
           )}
@@ -176,18 +163,16 @@ export default function Marketplace() {
           value={sortBy}
           onChange={e => setSortBy(e.target.value)}
         >
-          {sortOptions.map(s => (
-            <option key={s.id} value={s.id}>
-              {txt(s.labelEn, s.labelFr, lang)}
-            </option>
-          ))}
+          <option value="newest">{txt('Newest',       'Plus récents',   lang)}</option>
+          <option value="mostviewed">{txt('Most viewed', 'Plus vus',     lang)}</option>
+          <option value="mostactive">{txt('Most active', 'Plus actifs',  lang)}</option>
         </select>
         <button
           className={`mkt-filter-btn ${showFilters ? 'active' : ''}`}
           onClick={() => setShowFilters(p => !p)}
         >
           <FontAwesomeIcon icon={faFilter} />
-          <span>{txt('Filters', 'Filtres', lang)}</span>
+          {txt('Filters', 'Filtres', lang)}
         </button>
       </div>
 
@@ -208,12 +193,23 @@ export default function Marketplace() {
               ))}
             </div>
           </div>
-          <button
-            className="mkt-filters__reset"
-            onClick={() => { setCategory('all'); setListingType('all'); setSearch('') }}
-          >
-            {txt('Reset filters', 'Réinitialiser', lang)}
-          </button>
+          <div className="mkt-filters__row">
+            <label className="mkt-filters__toggle">
+              <input
+                type="checkbox"
+                checked={verifiedOnly}
+                onChange={e => setVerifiedOnly(e.target.checked)}
+              />
+              <span className="mkt-filters__toggle-slider" />
+              <span>{txt('Verified companies only', 'Entreprises vérifiées uniquement', lang)}</span>
+            </label>
+            <button
+              className="mkt-filters__reset"
+              onClick={() => { setCategory('all'); setListingType('all'); setSearch(''); setVerifiedOnly(false) }}
+            >
+              {txt('Reset', 'Réinitialiser', lang)}
+            </button>
+          </div>
         </div>
       )}
 
@@ -234,269 +230,202 @@ export default function Marketplace() {
       {/* ── Tabs ── */}
       <div className="mkt-tabs">
         <button
-          className={`mkt-tab ${tab === 'listings' ? 'active' : ''}`}
-          onClick={() => setTab('listings')}
+          className={`mkt-tab ${tab === 'all' ? 'active' : ''}`}
+          onClick={() => setTab('all')}
         >
-          {txt('Listings', 'Annonces', lang)}
-          <span className="mkt-tab__count">{filtered.length}</span>
+          {txt('All Listings', 'Toutes les annonces', lang)}
         </button>
         <button
-          className={`mkt-tab ${tab === 'companies' ? 'active' : ''}`}
-          onClick={() => setTab('companies')}
+          className={`mkt-tab ${tab === 'featured' ? 'active' : ''}`}
+          onClick={() => setTab('featured')}
         >
-          {txt('Companies', 'Entreprises', lang)}
+          <FontAwesomeIcon icon={faFire} />
+          {txt('Featured', 'En vedette', lang)}
+          <span className="mkt-tab__count">{featuredCount}</span>
         </button>
         <button
           className={`mkt-tab ${tab === 'saved' ? 'active' : ''}`}
           onClick={() => setTab('saved')}
         >
           {txt('Saved', 'Sauvegardés', lang)}
-          {savedCount > 0 && (
-            <span className="mkt-tab__count">{savedCount}</span>
-          )}
+          {savedCount > 0 && <span className="mkt-tab__count">{savedCount}</span>}
         </button>
       </div>
 
-      {/* ════════ LISTINGS TAB ════════ */}
-      {(tab === 'listings' || tab === 'saved') && (
-        <>
-          {/* Featured tenders strip */}
-          {tab === 'listings' && search === '' && (
-            <div className="mkt-featured">
-              <div className="mkt-featured__header">
-                <div className="mkt-featured__title">
-                  <FontAwesomeIcon icon={faFire} />
-                  {txt('Active Tenders', 'Appels d\'offres actifs', lang)}
-                </div>
-              </div>
-              <div className="mkt-tenders-strip">
-                {listings.filter(l => l.type === 'tender').map(tender => {
-                  const tc = typeConfig.tender
-                  return (
-                    <div
-                      key={tender.id}
-                      className="mkt-tender-card"
-                      onClick={() => setContactItem(tender)}
-                    >
-                      <div className="mkt-tender-card__top">
-                        <img src={tender.companyLogo} alt={tender.company} />
-                        <div>
-                          <span className="mkt-tender-card__type" style={{ background: tc.bg, color: tc.color }}>
-                            <FontAwesomeIcon icon={tc.icon} />
-                            {txt('Tender', 'Appel d\'offres', lang)}
-                          </span>
-                          {tender.verified && (
-                            <span className="mkt-tender-card__verified">
-                              <FontAwesomeIcon icon={faCheckCircle} />
-                              {txt('Verified', 'Vérifié', lang)}
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                      <h3 className="mkt-tender-card__title">
-                        {txt(tender.titleEn, tender.titleFr, lang)}
-                      </h3>
-                      <p className="mkt-tender-card__company">{tender.company}</p>
-                      <div className="mkt-tender-card__footer">
-                        <span className="mkt-tender-card__price">
-                          {txt(tender.priceEn, tender.priceFr, lang)}
-                        </span>
-                        {tender.deadline && (
-                          <span className="mkt-tender-card__deadline">
-                            <FontAwesomeIcon icon={faClock} />
-                            {tender.deadline}
-                          </span>
-                        )}
-                      </div>
-                      <button className="mkt-tender-card__btn"
-                        onClick={e => { e.stopPropagation(); setContactItem(tender) }}>
-                        {txt('Submit proposal', 'Soumettre une offre', lang)}
-                        <FontAwesomeIcon icon={faArrowRight} />
-                      </button>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Listings grid */}
-          {filtered.length === 0 ? (
-            <div className="mkt-empty">
-              <div className="mkt-empty__icon">
-                <FontAwesomeIcon icon={faSearch} />
-              </div>
-              <p>{txt('No listings found', 'Aucune annonce trouvée', lang)}</p>
-              <button onClick={() => { setSearch(''); setCategory('all'); setListingType('all') }}>
-                {txt('Clear filters', 'Effacer les filtres', lang)}
-              </button>
-            </div>
-          ) : (
-            <div className="mkt-grid">
-              {filtered.filter(l => l.type !== 'tender').map(listing => {
-                const tc = typeConfig[listing.type]
-                return (
-                  <div
-                    key={listing.id}
-                    className="mkt-listing-card"
-                    onClick={() => setContactItem(listing)}
-                  >
-                    {/* Cover */}
-                    <div className="mkt-listing-card__cover">
-                      <img src={listing.cover} alt={listing.titleEn} />
-                      <div className="mkt-listing-card__type-badge"
-                        style={{ background: tc.bg, color: tc.color }}>
-                        <FontAwesomeIcon icon={tc.icon} />
-                        {txt(tc.colorEn, tc.colorFr, lang)}
-                      </div>
-                      <button
-                        className={`mkt-listing-card__save ${listing.isSaved ? 'saved' : ''}`}
-                        onClick={e => toggleSave(listing.id, e)}
-                      >
-                        <FontAwesomeIcon icon={listing.isSaved ? faBookmark : faBookmarkReg} />
-                      </button>
-                    </div>
-
-                    {/* Body */}
-                    <div className="mkt-listing-card__body">
-                      {/* Company */}
-                      <div className="mkt-listing-card__company-row">
-                        <img src={listing.companyLogo} alt={listing.company}
-                          className="mkt-listing-card__company-logo" />
-                        <div className="mkt-listing-card__company-info">
-                          <span className="mkt-listing-card__company-name">
-                            {listing.company}
-                          </span>
-                          {listing.verified && (
-                            <FontAwesomeIcon icon={faCheckCircle}
-                              className="mkt-listing-card__verified-icon" />
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="mkt-listing-card__title">
-                        {txt(listing.titleEn, listing.titleFr, lang)}
-                      </h3>
-
-                      {/* Location */}
-                      <p className="mkt-listing-card__location">
-                        <FontAwesomeIcon icon={faLocationDot} />
-                        {txt(listing.locationEn, listing.locationFr, lang)}
-                      </p>
-
-                      {/* Price */}
-                      <p className="mkt-listing-card__price">
-                        {txt(listing.priceEn, listing.priceFr, lang)}
-                      </p>
-
-                      {/* Rating + response */}
-                      <div className="mkt-listing-card__meta">
-                        {listing.rating && <StarRating rating={listing.rating} />}
-                        {listing.reviews > 0 && (
-                          <span className="mkt-listing-card__reviews">
-                            ({listing.reviews})
-                          </span>
-                        )}
-                        {listing.responseTime && (
-                          <span className="mkt-listing-card__response">
-                            <FontAwesomeIcon icon={faClock} />
-                            {listing.responseTime}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Tags */}
-                      <div className="mkt-listing-card__tags">
-                        {listing.tags.slice(0, 3).map(tag => (
-                          <span key={tag} className="mkt-listing-card__tag">{tag}</span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Footer */}
-                    <div className="mkt-listing-card__footer">
-                      <button
-                        className="mkt-listing-card__contact-btn"
-                        onClick={e => { e.stopPropagation(); setContactItem(listing) }}
-                      >
-                        <FontAwesomeIcon icon={faEnvelope} />
-                        {txt('Contact', 'Contacter', lang)}
-                      </button>
-                      <button className="mkt-listing-card__view-btn">
-                        {txt('View details', 'Voir détails', lang)}
-                        <FontAwesomeIcon icon={faArrowRight} />
-                      </button>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          )}
-        </>
+      {/* ── Results count ── */}
+      {filtered.length > 0 && (
+        <p className="mkt-count">
+          <strong>{filtered.length}</strong> {txt('listings found', 'annonces trouvées', lang)}
+        </p>
       )}
 
-      {/* ════════ COMPANIES TAB ════════ */}
-      {tab === 'companies' && (
-        <div className="mkt-companies-grid">
-          {featuredCompanies.map(company => (
-            <div key={company.id} className="mkt-company-card">
-              <div className="mkt-company-card__top">
-                <img src={company.logo} alt={company.name}
-                  className="mkt-company-card__logo" />
-                {company.verified && (
-                  <div className="mkt-company-card__verified">
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                    {txt('Verified', 'Vérifié', lang)}
-                  </div>
-                )}
-              </div>
-              <h3 className="mkt-company-card__name">{company.name}</h3>
-              <p className="mkt-company-card__category">
-                {txt(company.categoryEn, company.categoryFr, lang)}
-              </p>
-              <p className="mkt-company-card__location">
-                <FontAwesomeIcon icon={faLocationDot} />
-                {txt(company.locationEn, company.locationFr, lang)}
-              </p>
-              <div className="mkt-company-card__meta">
-                <StarRating rating={company.rating} />
-                <span className="mkt-company-card__listings">
-                  {company.listingsCount} {txt('listings', 'annonces', lang)}
-                </span>
-              </div>
-              <button className="mkt-company-card__btn">
-                {txt('View profile', 'Voir profil', lang)}
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
-            </div>
+      {/* ── Listings grid ── */}
+      {filtered.length === 0 ? (
+        <div className="mkt-empty">
+          <div className="mkt-empty__icon">
+            <FontAwesomeIcon icon={faStore} />
+          </div>
+          <p>{txt('No listings found', 'Aucune annonce trouvée', lang)}</p>
+          <button onClick={() => { setSearch(''); setCategory('all'); setListingType('all') }}>
+            {txt('Clear filters', 'Effacer les filtres', lang)}
+          </button>
+        </div>
+      ) : (
+        <div className="mkt-grid">
+          {filtered.map(listing => (
+            <ListingCard
+              key={listing.id}
+              listing={listing}
+              lang={lang}
+              onOpen={() => setSelectedListing(listing)}
+              onSave={toggleSave}
+              onInquiry={e => { e.stopPropagation(); setInquiryListing(listing) }}
+            />
           ))}
         </div>
       )}
 
-      {/* Post listing modal */}
+      {/* ── Detail panel ── */}
+      {selectedListing && (
+        <ListingDetail
+          listing={selectedListing}
+          onClose={() => setSelectedListing(null)}
+          onInquiry={() => setInquiryListing(selectedListing)}
+          onSave={toggleSave}
+          lang={lang}
+        />
+      )}
+
+      {/* ── Post listing modal ── */}
       {showPost && (
         <PostListingModal
           onClose={() => setShowPost(false)}
           lang={lang}
           onPosted={() => {
             setShowPost(false)
-            addToast(
-              txt('Listing submitted for review!', 'Annonce soumise pour examen !', lang),
-              'success'
-            )
+            addToast(txt('Listing posted!', 'Annonce publiée !', lang), 'success')
           }}
         />
       )}
 
-      {/* Contact modal */}
-      {contactItem && (
-        <ContactModal
-          item={contactItem}
-          onClose={() => setContactItem(null)}
+      {/* ── Inquiry modal ── */}
+      {inquiryListing && (
+        <InquiryModal
+          listing={inquiryListing}
+          onClose={() => setInquiryListing(null)}
           lang={lang}
         />
       )}
+
+    </div>
+  )
+}
+
+/* ════════════════════
+   LISTING CARD
+════════════════════ */
+function ListingCard({ listing, lang, onOpen, onSave, onInquiry }) {
+  const tc = typeColors[listing.type] || typeColors.sell
+
+  return (
+    <div className="mkt-card" onClick={onOpen}>
+
+      {/* Cover */}
+      <div className="mkt-card__cover">
+        <img src={listing.cover} alt={listing.titleEn} />
+        {listing.isFeatured && (
+          <div className="mkt-card__featured">
+            <FontAwesomeIcon icon={faFire} />
+            {txt('Featured', 'Vedette', lang)}
+          </div>
+        )}
+        {listing.isNew && (
+          <div className="mkt-card__new">
+            {txt('New', 'Nouveau', lang)}
+          </div>
+        )}
+        <button
+          className={`mkt-card__save ${listing.isSaved ? 'saved' : ''}`}
+          onClick={e => onSave(listing.id, e)}
+        >
+          <FontAwesomeIcon icon={listing.isSaved ? faBookmark : faBookmarkReg} />
+        </button>
+      </div>
+
+      {/* Body */}
+      <div className="mkt-card__body">
+
+        {/* Company row */}
+        <div className="mkt-card__company-row">
+          <img src={listing.companyLogo} alt={listing.company} className="mkt-card__logo" />
+          <div className="mkt-card__company-info">
+            <span className="mkt-card__company">{listing.company}</span>
+            {listing.verified && (
+              <span className="mkt-card__verified">
+                <FontAwesomeIcon icon={faShieldHalved} />
+                {txt('Verified', 'Vérifié', lang)}
+              </span>
+            )}
+          </div>
+          <span
+            className="mkt-card__type"
+            style={{ background: tc.bg, color: tc.color }}
+          >
+            {txt(tc.labelEn, tc.labelFr, lang)}
+          </span>
+        </div>
+
+        {/* Title */}
+        <h3 className="mkt-card__title">
+          {txt(listing.titleEn, listing.titleFr, lang)}
+        </h3>
+
+        {/* Description */}
+        <p className="mkt-card__desc">
+          {txt(listing.descEn, listing.descFr, lang).slice(0, 100)}...
+        </p>
+
+        {/* Location */}
+        <p className="mkt-card__location">
+          <FontAwesomeIcon icon={faLocationDot} />
+          {txt(listing.locationEn, listing.locationFr, lang)}
+        </p>
+
+        {/* Price + min order */}
+        <div className="mkt-card__price-row">
+          <div className="mkt-card__price">
+            {txt(listing.priceEn, listing.priceFr, lang)}
+          </div>
+          <div className="mkt-card__min-order">
+            {txt('Min:', 'Min :', lang)} {txt(listing.minOrder, listing.minOrderFr, lang)}
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mkt-card__stats">
+          <span>
+            <FontAwesomeIcon icon={faEye} />
+            {listing.views}
+          </span>
+          <span>
+            <FontAwesomeIcon icon={faMessage} />
+            {listing.inquiries} {txt('inquiries', 'demandes', lang)}
+          </span>
+          <span>{txt(listing.postedEn, listing.postedFr, lang)}</span>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <div className="mkt-card__footer" onClick={e => e.stopPropagation()}>
+        <button className="mkt-card__inquiry-btn" onClick={onInquiry}>
+          <FontAwesomeIcon icon={faMessage} />
+          {txt('Send inquiry', 'Envoyer une demande', lang)}
+        </button>
+        <button className="mkt-card__view-btn" onClick={onOpen}>
+          {txt('View', 'Voir', lang)}
+          <FontAwesomeIcon icon={faArrowRight} />
+        </button>
+      </div>
 
     </div>
   )
