@@ -13,12 +13,13 @@ import { useLang } from '../../context/LanguageContext'
 import { txt } from '../../utils/translate'
 import './Topbar.css'
 import logo from '../../assets/logo1.jpg'
+import LogoutModal from '../ui/LogoutModal'
 
 const navItems = [
-  { icon: faHouse,    en: 'Home',         fr: 'Accueil',       path: '/'              },
-  { icon: faUsers,    en: 'Network',       fr: 'Réseau',        path: '/network'       },
-  { icon: faEnvelope, en: 'Messaging',     fr: 'Messagerie',    path: '/messaging',    badge: 3 },
-  { icon: faBell,     en: 'Notifications', fr: 'Notifications', path: '/notifications', badge: 7 },
+  { icon: faHouse, en: 'Home', fr: 'Accueil', path: '/' },
+  { icon: faUsers, en: 'Network', fr: 'Réseau', path: '/network' },
+  { icon: faEnvelope, en: 'Messaging', fr: 'Messagerie', path: '/messaging', badge: 3 },
+  { icon: faBell, en: 'Notifications', fr: 'Notifications', path: '/notifications', badge: 7 },
 ]
 
 const menuSections = [
@@ -26,33 +27,34 @@ const menuSections = [
     labelEn: 'Main',
     labelFr: 'Principal',
     items: [
-      { icon: faHouse,             en: 'Home',                fr: 'Accueil',               path: '/',           color: '#7C3D2B', desc: null },
-      { icon: faUsers,             en: 'My Network',          fr: 'Mon réseau',             path: '/network',    color: '#2D6A4F', desc: null },
-      { icon: faEnvelope,          en: 'Messaging',           fr: 'Messagerie',             path: '/messaging',  color: '#7C3D2B', desc: null, badge: 3 },
-      { icon: faBell,              en: 'Notifications',       fr: 'Notifications',          path: '/notifications', color: '#C9822A', desc: null, badge: 7 },
+      { icon: faHouse, en: 'Home', fr: 'Accueil', path: '/', color: '#7C3D2B', desc: null },
+      { icon: faUsers, en: 'My Network', fr: 'Mon réseau', path: '/network', color: '#2D6A4F', desc: null },
+      { icon: faEnvelope, en: 'Messaging', fr: 'Messagerie', path: '/messaging', color: '#7C3D2B', desc: null, badge: 3 },
+      { icon: faBell, en: 'Notifications', fr: 'Notifications', path: '/notifications', color: '#C9822A', desc: null, badge: 7 },
     ]
   },
   {
     labelEn: 'Explore',
     labelFr: 'Explorer',
     items: [
-      { icon: faUserGroup,         en: 'Groups',              fr: 'Groupes',                path: '/groups',     color: '#4338ca', descEn: 'Connect with people who share your interests.', descFr: 'Connectez-vous avec des personnes partageant vos intérêts.' },
-      { icon: faBriefcase,         en: 'Job Opportunities',   fr: "Opportunités d'emploi",  path: '/jobs',       color: '#7C3D2B', descEn: 'Find your next role across Africa.',           descFr: 'Trouvez votre prochain poste en Afrique.'               },
-      { icon: faMoneyBillTrendUp,  en: 'Projects & Funding',  fr: 'Projets & Financement',  path: '/projects',   color: '#2D6A4F', descEn: 'Fund or get funded for your next big idea.',   descFr: 'Financez ou faites financer votre prochaine idée.'      },
-      { icon: faCalendarDays,      en: 'Events',              fr: 'Événements',              path: '/events',     color: '#C9822A', descEn: 'Find events near you or online.',              descFr: 'Trouvez des événements près de chez vous.'              },
-      { icon: faGraduationCap,     en: 'Training',            fr: 'Formations',              path: '/training',   color: '#7c3aed', descEn: 'Develop your skills with African trainers.',   descFr: 'Développez vos compétences avec des formateurs africains.' },
-      { icon: faHandshake,         en: 'Investors',           fr: 'Investisseurs',           path: '/investors',  color: '#2D6A4F', descEn: 'Connect with investors ready to support you.', descFr: 'Connectez-vous avec des investisseurs prêts à vous soutenir.' },
-      { icon: faWrench,            en: 'Services & Skills',   fr: 'Services & Compétences',  path: '/services',   color: '#7C3D2B', descEn: 'Offer or find professional services.',         descFr: 'Offrez ou trouvez des services professionnels.'         },
-      { icon: faGlobe,             en: 'Diaspora Connect',    fr: 'Diaspora Connect',        path: '/diaspora',   color: '#C9822A', descEn: 'Africans abroad connected to home.',           descFr: 'Les Africains à l\'étranger connectés au pays.'         },
-      { icon: faStore,             en: 'B2B Marketplace',     fr: 'Marketplace B2B',         path: '/marketplace',color: '#4338ca', descEn: 'Buy, sell and partner with businesses.',       descFr: 'Achetez, vendez et partenariez avec des entreprises.'   },
+      { icon: faUserGroup, en: 'Groups', fr: 'Groupes', path: '/groups', color: '#4338ca', descEn: 'Connect with people who share your interests.', descFr: 'Connectez-vous avec des personnes partageant vos intérêts.' },
+      { icon: faBriefcase, en: 'Job Opportunities', fr: "Opportunités d'emploi", path: '/jobs', color: '#7C3D2B', descEn: 'Find your next role across Africa.', descFr: 'Trouvez votre prochain poste en Afrique.' },
+      { icon: faMoneyBillTrendUp, en: 'Projects & Funding', fr: 'Projets & Financement', path: '/projects', color: '#2D6A4F', descEn: 'Fund or get funded for your next big idea.', descFr: 'Financez ou faites financer votre prochaine idée.' },
+      { icon: faCalendarDays, en: 'Events', fr: 'Événements', path: '/events', color: '#C9822A', descEn: 'Find events near you or online.', descFr: 'Trouvez des événements près de chez vous.' },
+      { icon: faGraduationCap, en: 'Training', fr: 'Formations', path: '/training', color: '#7c3aed', descEn: 'Develop your skills with African trainers.', descFr: 'Développez vos compétences avec des formateurs africains.' },
+      { icon: faHandshake, en: 'Investors', fr: 'Investisseurs', path: '/investors', color: '#2D6A4F', descEn: 'Connect with investors ready to support you.', descFr: 'Connectez-vous avec des investisseurs prêts à vous soutenir.' },
+      { icon: faWrench, en: 'Services & Skills', fr: 'Services & Compétences', path: '/services', color: '#7C3D2B', descEn: 'Offer or find professional services.', descFr: 'Offrez ou trouvez des services professionnels.' },
+      { icon: faGlobe, en: 'Diaspora Connect', fr: 'Diaspora Connect', path: '/diaspora', color: '#C9822A', descEn: 'Africans abroad connected to home.', descFr: 'Les Africains à l\'étranger connectés au pays.' },
+      { icon: faStore, en: 'B2B Marketplace', fr: 'Marketplace B2B', path: '/marketplace', color: '#4338ca', descEn: 'Buy, sell and partner with businesses.', descFr: 'Achetez, vendez et partenariez avec des entreprises.' },
     ]
   },
 ]
 
 export default function Topbar({ activePath = '/' }) {
-  const { lang }  = useLang()
-  const [dropOpen,  setDropOpen]  = useState(false)
-  const [menuOpen,  setMenuOpen]  = useState(false)
+  const { lang } = useLang()
+  const [showLogout, setShowLogout] = useState(false)
+  const [dropOpen, setDropOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
   const [menuSearch, setMenuSearch] = useState('')
   const dropRef = useRef()
   const menuRef = useRef()
@@ -78,12 +80,12 @@ export default function Topbar({ activePath = '/' }) {
   // Filter menu items by search
   const filteredSections = menuSearch.trim()
     ? [{
-        labelEn: 'Results', labelFr: 'Résultats',
-        items: menuSections.flatMap(s => s.items).filter(item =>
-          item.en.toLowerCase().includes(menuSearch.toLowerCase()) ||
-          item.fr.toLowerCase().includes(menuSearch.toLowerCase())
-        )
-      }]
+      labelEn: 'Results', labelFr: 'Résultats',
+      items: menuSections.flatMap(s => s.items).filter(item =>
+        item.en.toLowerCase().includes(menuSearch.toLowerCase()) ||
+        item.fr.toLowerCase().includes(menuSearch.toLowerCase())
+      )
+    }]
     : menuSections
 
   return (
@@ -91,13 +93,13 @@ export default function Topbar({ activePath = '/' }) {
       <header className="topbar">
 
         {/* LEFT — Logo */}
-      <div className="topbar__left">
-        <a href="/" className="topbar__logo">
-          <img src={logo} alt="AfriConnect" className="topbar__logo-img" />
-          <div className="topbar__logo-text">
-          </div>
-        </a>
-      </div>
+        <div className="topbar__left">
+          <a href="/" className="topbar__logo">
+            <img src={logo} alt="AfriConnect" className="topbar__logo-img" />
+            <div className="topbar__logo-text">
+            </div>
+          </a>
+        </div>
 
         {/* CENTER — Search */}
         <div className="topbar__center">
@@ -190,9 +192,13 @@ export default function Topbar({ activePath = '/' }) {
                   <span>{txt('Settings', 'Paramètres', lang)}</span>
                 </a>
                 <div className="topbar__dropdown-divider" />
-                <button className="topbar__dropdown-item topbar__dropdown-item--danger">
+                <button className="topbar__dropdown-item topbar__dropdown-item--danger"
+                  onClick={() => {
+                    setDropOpen(false)
+                    setShowLogout(true)
+                  }}>
                   <FontAwesomeIcon icon={faRightFromBracket} />
-                  <span>{txt('Log out', 'Déconnexion', lang)}</span>
+                  <span>{txt('Log Out', 'Se déconnecter', lang)}</span>
                 </button>
               </div>
             )}
@@ -247,8 +253,8 @@ export default function Topbar({ activePath = '/' }) {
                     {txt(section.labelEn, section.labelFr, lang)}
                   </p>
                   {section.items.map(item => (
-                    
-                     <a key={item.path}
+
+                    <a key={item.path}
                       href={item.path}
                       className={`mobile-menu__item ${activePath === item.path ? 'active' : ''}`}
                       onClick={() => setMenuOpen(false)}
@@ -300,10 +306,21 @@ export default function Topbar({ activePath = '/' }) {
                 onClick={() => setMenuOpen(false)}>
                 <FontAwesomeIcon icon={faGear} />
               </a>
+              <button className="mobile-menu__footer-settings"
+                onClick={() => {
+                  setMenuOpen(false)
+                  setShowLogout(true)
+                }}
+                style={{ color: 'var(--color-danger)' }}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+              </button>
             </div>
 
           </div>
         </div>
+      )}
+      {showLogout && (
+        <LogoutModal onClose={() => setShowLogout(false)} lang={lang} />
       )}
     </>
   )

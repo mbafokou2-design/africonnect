@@ -10,19 +10,19 @@ import { txt } from '../../utils/translate'
 import './Sidebar.css'
 
 const mainNav = [
-  { icon: faHouse,             en: 'Home',                  fr: 'Accueil',               path: '/'                },
-  { icon: faUsers,             en: 'My Network',             fr: 'Mon réseau',             path: '/network'         },
-  { icon: faEnvelope,          en: 'Messaging',              fr: 'Messagerie',             path: '/messaging'       },
-  { icon: faUserGroup,         en: 'Groups',                 fr: 'Groupes',               path: '/groups'          },
-  { icon: faBriefcase,         en: 'Job Opportunities',      fr: "Opportunités d'emploi",  path: '/jobs'            },
-  { icon: faMoneyBillTrendUp,  en: 'Projects & Funding',     fr: 'Projets & Financement',  path: '/projects'        },
-  { icon: faWrench,            en: 'Services & Skills',      fr: 'Services & Compétences', path: '/services'        },
-  { icon: faCalendarDays,      en: 'Events',                 fr: 'Événements',             path: '/events'          },
-  { icon: faGraduationCap,     en: 'Training',               fr: 'Formations',             path: '/training'        },
-  { icon: faHandshake,         en: 'Investors',              fr: 'Investisseurs',          path: '/investors'       },
-  { icon: faGlobe,             en: 'Diaspora Connect',       fr: 'Diaspora Connect',       path: '/diaspora'        },
-  { icon: faStore,             en: 'B2B Marketplace',        fr: 'Marketplace B2B',        path: '/marketplace'     },
-  { icon: faEllipsis,          en: 'More',                   fr: 'Plus',                   path: '/more'            },
+  { icon: faHouse, en: 'Home', fr: 'Accueil', path: '/' },
+  { icon: faUsers, en: 'My Network', fr: 'Mon réseau', path: '/network' },
+  { icon: faEnvelope, en: 'Messaging', fr: 'Messagerie', path: '/messaging' },
+  { icon: faUserGroup, en: 'Groups', fr: 'Groupes', path: '/groups' },
+  { icon: faBriefcase, en: 'Job Opportunities', fr: "Opportunités d'emploi", path: '/jobs' },
+  { icon: faMoneyBillTrendUp, en: 'Projects & Funding', fr: 'Projets & Financement', path: '/projects' },
+  { icon: faWrench, en: 'Services & Skills', fr: 'Services & Compétences', path: '/services' },
+  { icon: faCalendarDays, en: 'Events', fr: 'Événements', path: '/events' },
+  { icon: faGraduationCap, en: 'Training', fr: 'Formations', path: '/training' },
+  { icon: faHandshake, en: 'Investors', fr: 'Investisseurs', path: '/investors' },
+  { icon: faGlobe, en: 'Diaspora Connect', fr: 'Diaspora Connect', path: '/diaspora' },
+  { icon: faStore, en: 'B2B Marketplace', fr: 'Marketplace B2B', path: '/marketplace' },
+  { icon: faEllipsis, en: 'More', fr: 'Plus', path: '/more' },
 ]
 
 export default function Sidebar({ activePath = '/' }) {
@@ -76,14 +76,10 @@ export default function Sidebar({ activePath = '/' }) {
             lang
           )}
         </p>
-        <button className="sidebar__premium-btn">
-          <span
-            data-en="Discover Premium"
-            data-fr="Découvrir Premium"
-          >
-            {txt('Discover Premium', 'Découvrir Premium', lang)}
-          </span>
-        </button>
+        <a href="/subscription" className="sidebar-premium__btn">
+          <FontAwesomeIcon icon={faCrown} />
+          {txt('Upgrade to Pro', 'Passer à Pro', lang)}
+        </a>
       </div>
 
     </aside>

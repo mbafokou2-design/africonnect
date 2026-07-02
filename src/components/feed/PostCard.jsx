@@ -155,16 +155,12 @@ export default function PostCard({ post }) {
         {/* ── Header ── */}
         <div className="postcard__header">
           <Link to={`/profile/${post.user.id}`} className="postcard__avatar-link">
-            <a href={`/profile/${post.user.id || 1}`}>
-              <img src={post.user.avatar} alt={post.user.name} className="postcard__avatar" />
-            </a>
+            <img src={post.user.avatar} alt={post.user.name} className="postcard__avatar" />
           </Link>
           <div className="postcard__user-info">
             <div className="postcard__name-row">
               <Link to={`/profile/${post.user.id}`} className="postcard__name-link">
-                <a href={`/profile/${post.user.id || 1}`} className="postcard__name-link">
-                  <span className="postcard__name">{post.user.name}</span>
-                </a>
+                <span className="postcard__name">{post.user.name}</span>
               </Link>
               {post.user.verified && (
                 <FontAwesomeIcon icon={faCheckCircle} className="postcard__verified" />

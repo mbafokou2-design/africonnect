@@ -147,3 +147,21 @@
 .settings-danger-btn:hover {
   background: rgba(239,68,68,0.15);
 }
+.settings-card__icon--gold { background: rgba(201,130,42,0.1); color: #C9822A; }
+
+.settings-nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-border);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text);
+  transition: color 0.2s;
+}
+
+.settings-nav-link:last-child { border-bottom: none; }
+.settings-nav-link:hover { color: var(--color-primary); }
+.settings-nav-link svg { font-size: 13px; color: var(--color-text-muted); }
